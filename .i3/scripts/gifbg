@@ -1,0 +1,41 @@
+#!/bin/sh
+# Uses xwinwrap to display given animated .gif in the center of the screen
+
+if [ $# -ne 2 ]; then
+echo 1>&2 Usage: $0 carpetaGifs tiempo
+exit 1
+fi
+
+#get screen resolution
+# SCRH=`xrandr | awk '/current/ { print $8 }'`
+SCRH=3000
+#  SCRW=`xrandr | awk '/current/ { print $10 }' | sed 'g/,//'`
+SCRW=1920
+
+
+while [ 1 ]; do
+    for y in $1/*.gif; do
+
+    #get gif resolution
+    IMGHW=`gifsicle --info $y | awk '/logical/ { print $3 }'`
+    #IMGHW='570x570'
+    IMGH=${IMGHW%x*}
+    IMGW=${IMGHW#*x}
+    POSY=2318
+    POSX=1424
+    #calculate position
+    POSH=$((($POSY)-($IMGH/2)))
+    POSW=$((($POSX)-($IMGW/2)))
+    echo $IMGHW
+    echo $POSH
+    echo $POSW
+#    POSH=2034
+#    POSW=1140
+    xwinwrap -g ${IMGHW}+${POSH}+${POSW} -ov -ni -s -nf -b -sh circle -o 0.55 -- gifview -w WID $y -a &
+   #  xwinwrap -g ${IMGHW}+${POSH}+${POSW} -ov -ni -s -nf -b -sh square -o 0.55 -- gifview -w WID $y -a &
+    sleep $2
+    pkill xwinwrap
+    done
+done
+
+exit 0

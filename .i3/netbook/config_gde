@@ -1,0 +1,449 @@
+
+font pango:DejaVu Sans Mono 8
+
+set $up k
+set $down j
+set $left h
+set $right l
+
+
+set $bg-color            #2f343f
+set $bar-color            #2f343f00
+set $inactive-bg-color   #2f343f
+set $text-color          #f3f4f5
+set $inactive-text-color #676E7D
+set $urgent-bg-color     #E53935
+set $purple             #6c71c4
+set $b_purple           #9599DC
+set $blue               #268bd2
+set $pink               #d33682
+set $cyan              #2aa198
+set $base               #002b36
+set $mod Mod4
+
+
+exec_always --no-startup-id numlockx on
+
+
+
+# use Mouse+Mod4 to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym Mod4+Return exec gnome-terminal
+
+# kill focused window
+bindsym Mod4++q kill
+
+#bindsym Print exec screenshot
+bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # All screens
+bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # Area selection
+
+bindsym Insert exec gnome-calculator
+bindsym Mod4+g exec google-chrome
+
+#TODO que se abra una nueva ventana con youtube en vez de ahora que se abre una pestania con youtube
+bindsym $mod+y exec google-chrome youtube.com
+
+#bindsym Mod4+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
+
+
+bindsym Mod4+a exec rofi -show drun -lines 5 -font "System San Francisco Display 18" -bw 0 -hide-scrollbar -separator-style none -line-margin 0 -width 100 -padding 600 -eh 2 -matching normal
+
+
+#-eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
+
+
+#bindsym Mod4+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu'
+
+
+
+#bindsym Mod4+d exec dmenu_run -p menu -l 10
+#bindsym Mod4+p exec dmenu_run -p menu -l 10
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It irtup-id i3-dmenu-desktop
+
+# change focus
+bindsym Mod4+$left focus left
+bindsym Mod4+$down focus down
+bindsym Mod4+$up focus up
+bindsym Mod4+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Left focus left
+bindsym Mod4+Down focus down
+bindsym Mod4+Up focus up
+bindsym Mod4+Right focus right
+
+# move focused window
+bindsym Mod4+Shift+$left move left
+bindsym Mod4+Shift+$down move down
+bindsym Mod4+Shift+$up move up
+bindsym Mod4+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Shift+Left move left 25px
+bindsym Mod4+Shift+Down move down 25px
+bindsym Mod4+Shift+Up move up 25px
+bindsym Mod4+Shift+Right move right 25px
+
+# split in horizontal orientation
+bindsym Mod4+Shift+v split h
+
+# split in vertical orientation
+bindsym Mod4+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod4+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+t layout toggle split
+
+# toggle tiling / floating
+bindsym Mod4+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod4+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod4+d focus parent
+
+# focus the child container
+#bindsym Mod4+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod4+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod4+minus scratchpad show
+
+bindsym Mod4+e exec nautilus /media/LinArchivos/FACU
+
+
+# GAPS MODS
+bindsym $mod+z			       gaps inner current plus 5
+bindsym $mod+Shift+z		   gaps inner current minus 5
+bindsym $mod+s			       gaps outer current plus 5
+bindsym $mod+Shift+s		   gaps outer current minus 5
+bindsym $mod+x                 gaps inner current set 15
+bindsym $mod+Shift+x		   gaps inner current set 0
+
+
+
+# MONITORES
+set $monitor_one DVI-I-1
+set $monitor_two DVI-D-0
+
+# Primary Workspaces
+set $workspace1 "1: "
+set $workspace2 "2: "
+set $workspace3 "3: "
+set $workspace4 "4: "
+set $workspace5 "5:  "
+set $workspace6 "6: ☿"
+set $workspace7 "7: ♅"
+set $workspace8 "8: ♑"
+set $workspace9 "9: ♆"
+set $workspace10 "10: "
+
+# Assign to output
+workspace $workspace1 output $monitor_one
+workspace $workspace2 output $monitor_one
+workspace $workspace3 output $monitor_one
+workspace $workspace4 output $monitor_one
+workspace $workspace5 output $monitor_one
+workspace $workspace6 output $monitor_one
+workspace $workspace7 output $monitor_one
+workspace $workspace8 output $monitor_one
+workspace $workspace9 output $monitor_one
+workspace $workspace10 output $monitor_one
+
+bindsym Mod4+1 workspace $workspace1
+bindsym Mod4+2 workspace $workspace2
+bindsym Mod4+3 workspace $workspace3
+bindsym Mod4+4 workspace $workspace4
+bindsym Mod4+5 workspace $workspace5
+bindsym Mod4+6 workspace $workspace6
+bindsym Mod4+7 workspace $workspace7
+bindsym Mod4+8 workspace $workspace8
+bindsym Mod4+9 workspace $workspace9
+bindsym Mod4+0 workspace $workspace10
+
+# move focused container to workspace
+bindsym Mod4+Shift+1 move container to workspace $workspace1
+bindsym Mod4+Shift+2 move container to workspace $workspace2
+bindsym Mod4+Shift+3 move container to workspace $workspace3
+bindsym Mod4+Shift+4 move container to workspace $workspace4
+bindsym Mod4+Shift+5 move container to workspace $workspace5
+bindsym Mod4+Shift+6 move container to workspace $workspace6
+bindsym Mod4+Shift+7 move container to workspace $workspace7
+bindsym Mod4+Shift+8 move container to workspace $workspace8
+bindsym Mod4+Shift+9 move container to workspace $workspace9
+bindsym Mod4+Shift+0 move container to workspace $workspace10
+
+# Navigate workspaces
+bindsym $mod+Next		workspace next
+bindsym $mod+Shift+Next         move container to workspace next
+bindsym $mod+Prior		workspace prev
+bindsym $mod+Shift+Prior	move container to workspace prev
+bindsym $mod+Tab		workspace back_and_forth
+bindsym $mod+Shift+Tab		move container to workspace back_and_forth
+bindsym $mod+n                  exec --no-startup-id ~/.i3/scripts/empty_workspace.sh
+bindsym $mod+Shift+n            exec --no-startup-id ~/.i3/scripts/move_to_empty_workspace.sh
+
+
+
+
+
+# Secondary Workspaces
+set $workspaceA "⚀"
+set $workspaceB "⚁"
+set $workspaceC "⚂"
+set $workspaceD "⚃"
+set $workspaceE "⚄"
+set $workspaceF "⚅"
+
+# Assign to output
+workspace $workspaceA output $monitor_two
+workspace $workspaceB output $monitor_two
+workspace $workspaceC output $monitor_two
+workspace $workspaceD output $monitor_two
+workspace $workspaceE output $monitor_two
+workspace $workspaceF output $monitor_two
+
+# Bind keys
+bindsym $mod+Mod2+KP_1 workspace $workspaceA
+bindsym $mod+Mod2+KP_2 workspace $workspaceB
+bindsym $mod+Mod2+KP_3 workspace $workspaceC
+bindsym $mod+Mod2+KP_4 workspace $workspaceD
+bindsym $mod+Mod2+KP_5 workspace $workspaceE
+bindsym $mod+Mod2+KP_6 workspace $workspaceF
+
+
+bindsym $mod+Shift+Mod2+KP_End move container to workspace $workspaceA
+bindsym $mod+Shift+Mod2+KP_Down move container to workspace $workspaceB
+bindsym $mod+Shift+Mod2+KP_Next move container to workspace $workspaceC
+bindsym $mod+Shift+Mod2+KP_Left move container to workspace $workspaceD
+bindsym $mod+Shift+Mod2+KP_Begin move container to workspace $workspaceE
+bindsym $mod+Shift+Mod2+KP_Right move container to workspace $workspaceF
+
+
+
+# Send Workspace to output
+bindsym $mod+backslash move container to output left
+
+
+
+# Applications to workspace (note get WM_CLASS using xprop
+#assign [class="Spotify"] $workspace10
+for_window [class="Spotify"] move to workspace $workspace10
+assign [class="TelegramDesktop"] $workspace4
+for_window [title="Messenger - Google Chrome"] move to workspace $workspace4
+#assign [class="google-chrome"] $workspace1
+assign [class="Atom"] $workspace2
+for_window [class="quassel"] move to scratchpad
+
+# reload the configuration file
+bindsym Mod4+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod4+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+#bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+
+# Create Log out, Reboot, Poweroff bindings
+mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym r exec systemctl reboot
+        bindsym l exit
+        bindsym p exec systemctl poweroff
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod4+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Shift+Left        resize shrink width 1 px or 1 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Shift+Down        resize grow height 1 px or 1 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Shift+Up          resize shrink height 1 px or 1 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+        bindsym Shift+Right       resize grow width 1 px or 1 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod4+r mode "resize"
+
+
+#exec_always --no-startup-id ~/.i3/scripts/focused_borders.sh
+# window colors
+#                       border              background         text                 indicator    child_border
+client.focused          $border-color           $bg-color          $text-color       $pink      $pink
+client.unfocused        $border-color $inactive-bg-color $inactive-text-color        $purple       $purple
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color   $purple       $purple
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color           $purple       $purple
+
+#WINDOW SETTINGS LIKE BORDERS AND FOCUS
+hide_edge_borders smart
+
+bindsym $mod+Shift+b exec i3-msg '[class="^.*"] border none'
+bindsym $mod+b exec i3-msg '[class="^.*"] border pixel 3'
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        output $monitor_one
+        i3bar_command i3bar -t
+        status_command i3blocks -c ~/.i3/i3blocks.conf
+
+        tray_output $monitor_one
+
+        position top
+				colors {
+				background $bar-color
+						separator #757575
+				#                  border             background         text
+				focused_workspace  $bg-color          $bg-color          $pink
+				inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+				urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+			}
+}
+
+bar {
+        i3bar_command i3bar -t
+        # status_command i3blocks -c ~/.i3/i3blocksSecond.conf
+        output $monitor_two
+        font pango:System San Francisco Display 15
+        position top
+				colors {
+				background $bar-color
+						separator $bar-color
+				#                  border             background         text
+				focused_workspace  $bg-color          $bg-color          $pink
+				inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+				urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+			}
+}
+
+
+
+
+
+
+
+
+# Lock the screen
+bindsym Mod4+Shift+Return exec i3lock -i ~/.i3/safe_lock_50.png -t
+
+# Pulse Audio controls
+# NOTE: Sometimes sink-volume (what sink to talk is wrong. Use: 'pactl list sinks'
+#       to list your sinks. From there, put the right number below, I had to change
+#       to 1.
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% && pkill -RTMIN+2 i3blocks #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% && pkill -RTMIN+2 i3blocks #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle && pkill -RTMIN+2 i3blocks # mute sound
+
+# Media player controls
+#bindsym XF86AudioPlay exec playerctl play
+#bindsym XF86AudioPause exec playerctl pause
+#
+#For use with any player and mpd, if mpd is running, media keys will control it. If mpd is not running then it'll try to control other media with playerctl
+bindsym XF86AudioPlay exec mpc_toggle || playerctl play-pause
+bindsym XF86AudioNext exec mpc next || playerctl next
+bindsym XF86AudioPrev exec mpc prev || playerctl previous
+
+# START NCMPCPP
+bindsym $mod+XF86AudioPlay exec (mpd && gnome-terminal -e ncmpcpp) || (pkill ncmpcpp && mpd --kill)
+
+#Conky
+exec --no-startup-id conky -c ~/.i3/.conkyrc_viejo
+
+exec --no-startup-id conky -c ~/.conky/Conky-Calendar-Extra-master/conky/conky
+
+# Desktops
+#exec_always feh --bg-fill /usr/share/backgrounds/korora/extras/hipster-beach.jpg
+# The xrandr below is for my home desktop setup where I have 2 monitors and the one of the left is on it's side... you probably don't want this, but left here commented out so you see how it works.
+# exec_always xrandr --output VIRTUAL1 --off --output DP2 --mode 1920x1080 --pos 2560x56 --rotate left --output DP1 --mode 2560x1440 --pos 0x0 --rotate normal --output HDMI2 --off --output HDMI1 --off --output VGA1 --off
+
+# exec --no-startup-id ~/.screenlayout/dosHor.sh
+exec --no-startup-id ~/.screenlayout/dosDvi.sh
+
+# Keyboard
+exec_always --no-startup-id g213-led -fx hwave all 15
+
+# Workspaces
+
+# Apps
+#  #exec alone only loads on start up use exec_always to always open.
+#exec rhythmbox
+#exec google-chrome
+exec spotify
+exec google-chrome messenger.com
+exec telegram-desktop
+
+exec_always compton -f
+#exec_always compton --config /home/male/.compton.conf~.i3/config
+# exec_always --no-startup-id killall bgcarousel; bgcarousel --random -t 240  -d ~/Pictures/Wallpapers
+# exec_always --no-startup-id killall bgcarousel; feh --bg-fill ~/Pictures/Wallpapers/wallhaven-50092.jpg --bg-fill ~/Pictures/Wallpapers/RYHrftN.png
+exec_always --no-startup-id ~/.i3/scripts/randomwallpaper ~/Pictures/Wallpapers 240
+exec_always --no-startup-id ~/.i3/scripts/gifbg ~/.i3/scripts/animaciones 45
+
+
+
+exec --no-startup-id dropbox start
+exec nm-applet
+#exec quasselclient
+
+#KEYBOARD LAYOUTS
+#exec --no-startup-id "setxkbmap -layout 'us,us,gr' -variant 'basic,intl,basic'"
+#exec --no-startup-id "setxkbmap -option 'grp:alt_shift_toggle'"
+exec_always --no-startup-id "setxkbmap -layout 'us,us,gr' -variant 'basic,intl,basic'"
+exec_always --no-startup-id "setxkbmap -option 'grp:alt_shift_toggle'"
+bindsym ISO_Next_Group exec pkill -RTMIN+1 i3blocks
+
+
+# thin borders
+#hide_edge_borders both
+
+# Gaps
+for_window [class="^.*"] border pixel 2
+
+gaps inner 15
+#smart_gaps on
+#gaps outer 7
+
+
+#exec --no-startup-id gnome-sound-applet
+#exec --no-startup-id gnome-settings-daemon
+#
+#FOCUS
+#bindsym $mod+semicolon exec i3-msg border pixel 3
+#bindsym --release $mod+semicolon exec i3-msg border pixel 0

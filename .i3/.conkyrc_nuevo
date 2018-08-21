@@ -1,0 +1,190 @@
+# Conky settings #
+background yes
+update_interval 1
+double_buffer yes
+no_buffers yes
+imlib_cache_size 10
+
+# Window specifications #
+gap_x 0
+gap_y 25
+#minimum_size 268 1220
+minimum_size 268
+maximum_width 268
+alignment top_right
+own_window yes
+own_window_class Conky
+own_window_type override
+
+#own_window_type normal
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 255
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+#own_window_type normal
+#own_window_transparent no
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_argb_visual yes
+#own_window_argb_value 0
+border_inner_margin 0
+border_outer_margin 0
+
+# Graphics settings #
+draw_shades no
+default_shade_color AAAAAA
+draw_outline no
+default_outline_color AAAAAA
+draw_borders no
+draw_graph_borders no
+default_graph_size 26 80
+show_graph_scale no
+show_graph_range no
+
+# Text settings #
+use_xft yes
+xftalpha 0
+xftfont Droid Sans:size=8
+text_buffer_size 256
+override_utf8_locale yes
+
+# Useful shortenings #
+short_units yes
+pad_percents  2
+top_name_width 30
+
+# Color scheme #
+default_color FFFFFF
+color0 eee8d5
+color1 eee8d5
+color2 6c71c4 #violeta
+color3 eee8d5
+color4 f44174 #rosa
+color5 ffffff
+color6 eee8d5
+color7 268bd2 #azul
+color8 2aa198 #verde
+
+
+#lua_load ~/.conky/scripts/draw_bg.lua
+#lua_draw_hook_pre draw_bg
+
+lua_load ~/.i3/scripts/clock_rings.lua
+lua_draw_hook_pre clock_rings
+
+
+
+TEXT
+# Fixed the weather parsing peice
+# You can build the command here:
+# https://developer.yahoo.com/yql/console/?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%201198989&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&debug=true#h=select+*+from+weather.forecast+where+woeid%3D2502265
+${execi 300 curl -s "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%2012813131%20and%20u%3D%27c%27%0A&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" -o ~/.cache/weather.xml}
+\
+# Weather
+\
+
+${goto 36}${voffset -20}${font Open Sans :size=36}${color7}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}°${font}${color}
+# I had to comment out this line - was printing out and overlaying.
+${goto 46}${voffset 14}${font Open Sans :size=12}${color7}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | head -1 }${font}${color}
+\
+
+${color1}${alignr 55}${voffset -87}${execi 300 grep "yweather:atmosphere" ~/.cache/weather.xml | grep -o "pressure=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tail -n1} ${execi 300 grep "yweather:units" ~/.cache/weather.xml | grep -o "pressure=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | head -1}
+${color1}${alignr 55}${voffset 8}${execi 300 grep "yweather:atmosphere" ~/.cache/weather.xml | grep -o "humidity=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"} %${color}
+${color1}${alignr 55}${voffset 6}${execi 300 grep "yweather:wind" ~/.cache/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tail -n1} ${execi 300 grep "yweather:units" ~/.cache/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | head -1}${color}
+\
+
+${color3}${voffset 60}${alignc 77}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2' | tr '[a-z]' '[A-Z]'}${color}
+${color3}${voffset -13}${alignc}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3' | tr '[a-z]' '[A-Z]'}${color}
+${color3}${voffset -13}${alignc -77}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4' | tr '[a-z]' '[A-Z]'}${color}
+\
+
+${color2}${voffset 40}${alignc 77}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°/${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°${color}
+${color2}${voffset -13}${alignc}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3'}°/${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3'}°${color}
+${color2}${voffset -13}${alignc -77}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4'}°/${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4'}°${color}
+
+
+#${hr 2}
+
+
+
+
+\
+# Cpu, memory and disks IO
+\
+${color2}${voffset -40}${hr 2}
+${voffset 0}
+${goto 40}${cpugraph 26,190 6c71c4 6c71c4 -l}
+${goto 40}Cpu:${alignr 39}${cpu}%
+
+${goto 40}${memgraph 26,190 6c71c4 6c71c4 -l}
+${goto 40}Mem:${alignr 39}${memperc}%
+
+#${goto 40}${diskiograph 26,190 268bd2 268bd2 -l}
+#${goto 40}Disk I/O:${alignr 39}${diskio}
+#${hr 2}
+
+#${color 268bd2}${voffset 0}${hr 1}
+${color0}${goto 40}${voffset 37}${fs_used_perc /}%
+${color0}${goto 40}${voffset 6}HOME
+${color0}${goto 175}${voffset -32}${fs_used_perc /media/LinArchivos}%
+${color0}${goto 175}${voffset 6}DATA
+
+
+\
+# Proceses
+\
+${color2}${hr 2}
+# Showing CPU Graph
+${offset 32}│
+#${offset 120}${cpugraph 40,183 666666 666666}${voffset -25}
+ ┌──┴──┐
+┌┤ ${font Monospace:normal:size=10}${color6}CPU${color4} │
+│└─────┘
+│
+├── ${font Ubuntu:normal:size=9}${color2}${if_existing /sys/class/hwmon/hwmon0/temp1_input}${hwmon 0 temp 1}°C${else}${if_existing /sys/class/hwmon/hwmon1/temp1_input}${hwmon 1 temp 1}°C${else}temp not detected${endif}{else}temp not detected${endif}${if_existing /sys/class/hwmon/hwmon1/temp2_input}
+# Showing TOP 5 CPU-consumers
+${font Monospace:normal:size=10}${color4}│
+${font Monospace:normal:size=10}${color4}├───────── ${font Monospace:normal:size=10}${color5}${top name 1}${alignr}${color2}${top cpu 1}%
+${color4}│${offset 10}${font Monospace:normal:size=10}${color4}└──────── ${font Monospace:normal:size=10}${color5}${top name 2}${alignr}${color2}${top cpu 2}%
+${color4}│${offset 20}${font Monospace:normal:size=10}${color4}└──────── ${font Monospace:normal:size=10}${color5}${top name 3}${alignr}${color2}${top cpu 3}%
+${color4}│${offset 30}${font Monospace:normal:size=10}${color4}└──────── ${font Monospace:normal:size=10}${color5}${top name 4}${alignr}${color2}${top cpu 4}%
+${color4}│${offset 40}${font Monospace:normal:size=10}${color4}└──────── ${font Monospace:normal:size=10}${color5}${top name 5}${alignr}${color2}${top cpu 5}%
+${color4}└─────────┐
+          │
+#Showing memory part with TOP 5
+       ┌──┴──┐
+${offset 40}┌─┤${offset 9}${font Monospace:normal:size=10}${color6}MEM${color4}${offset 7}│
+     │ └─────┘
+     │
+     ├──${color2}${font Monospace:normal:size=10} $mem / $memmax $alignr $memperc%
+${color4}     │
+${color4}${offset 40}└──────── ${font Monospace:normal:size=10}${color5}${top_mem name 1}${color2}${alignr}${top_mem mem 1}%
+${color4}${offset 40} └──────── ${font Monospace:normal:size=10}${color5}${top_mem name 2}${color2}${alignr}${top_mem mem 2}%
+${color4}${offset 40}  └──────── ${font Monospace:normal:size=10}${color5}${top_mem name 3}${color2}${alignr}${top_mem mem 3}%
+${color4}${offset 40}   └──────── ${font Monospace:normal:size=10}${color5}${top_mem name 4}${color2}${alignr}${top_mem mem 4}%
+${color4}${offset 40}    └──────── ${font Monospace:normal:size=10}${color5}${top_mem name 4}${color2}${alignr}${top_mem mem 5}%
+
+#${hr 2}
+
+
+\
+# Calendar
+\
+${font Hack :size=11}
+${goto 40}${color4}${execpi 3600 cal -m | head -1 | sed -e 's/\s*//'}${color4}${hr 2}
+${voffset 15}$color${execpi 3600 VinDSL_Cal_8=`date +%-d`; cal -m  | sed -e '1d' -e 's/^/${goto 40} /' -e 's/ '$VinDSL_Cal_8' /${color f44174}&${color}/'}
+#${voffset 3}$color${execpi 3600 cal -m }
+
+${font Droid Sans :pixelsize=27 :bold}
+${voffset -55}${execpi 1  ~/.i3/scripts/binarclock.py | sed  -e 's/^/${goto 40}/'}
+
+
+
+\
+# Various images including the icons of the forecast #
+\
+${image ~/.conky/images/pressure.png -p 214,20 -s 16x16}\
+${image ~/.conky/images/humidity.png -p 214,40 -s 16x16}\
+${image ~/.conky/images/wind.png -p 214,60 -s 16x16}\
+${execi 300 cp -f ~/.conky/icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2').png ~/.cache/weather-1.png}${image ~/.cache/weather-1.png -p 41,168 -s 32x32}\
+${execi 300 cp -f ~/.conky/icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3').png ~/.cache/weather-2.png}${image ~/.cache/weather-2.png -p 119,168 -s 32x32}\
+${execi 300 cp -f ~/.conky/icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4').png ~/.cache/weather-3.png}${image ~/.cache/weather-3.png -p 195,168 -s 32x32}${font}\
