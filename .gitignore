@@ -1,0 +1,7 @@
+*
+
+!.gitignore
+!.vimrc
+!.bashrc
+!.bash_profile
+!.i3/*
