@@ -85,3 +85,4 @@ export WORKON_HOME=$HOME/.virtualenvs
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/male/.sdkman"
 [[ -s "/home/male/.sdkman/bin/sdkman-init.sh" ]] && source "/home/male/.sdkman/bin/sdkman-init.sh"
+
